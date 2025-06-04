@@ -31,5 +31,10 @@
         return $dataMahasiswaByID;
     }
 
+    function createDataMahasiswa($conn, $data) {
+        // data adalah array assostiatif
+        
+    }
+
 
 ?>
