@@ -120,7 +120,7 @@
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" required>
 
-            <button type="submit">Simpan</button>
+            <button value="submit" type="submit">Simpan</button>
         </form>
     </div>
 </body>
