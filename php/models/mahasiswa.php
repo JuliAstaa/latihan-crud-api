@@ -33,14 +33,14 @@
 
     function createDataMahasiswa($conn, $data) {
         // data adalah array assostiatif
-        $nim = $data['NIM'] ?? null;
+        $nim = $data['nim'] ?? null;
         $nama = $data['nama'] ?? null;
         $id_prodi = $data['id_prodi'] ?? null;
         $email = $data['email'] ?? null;
 
         $query = "INSERT INTO mahasiswa(nim, nama_mhs, id_prodi, email) VALUES(?, ?, ?, ?)";
 
-        $stmt = myqli_prepare($conn, $query);
+        $stmt = mysqli_prepare($conn, $query);
 
         // cek statement
         if($stmt === false) {
@@ -49,7 +49,7 @@
             return false;
         }
 
-        $bindResult = msyqli_stmt_bind_param($stmt, 'ssis', $nim, $nama, $id_prodi, $email);
+        $bindResult = mysqli_stmt_bind_param($stmt, 'ssis', $nim, $nama, $id_prodi, $email);
 
         // cek binding / ikatan
         if($bindResult === false) {
