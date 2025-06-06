@@ -35,7 +35,15 @@
 
         // ambil data json dari body request wakk
         $jsonInputRaw = file_get_contents('php://input');
-        $dataMahasiwa = json_decode($jsonInputRaw, true);
+        $dataMahasiwa = json_decode($jsonInputRaw, true);   
+
+        // var_dump($dataMahasiwa);
+
+        // $prodi = getDataProdiByID($conn, $dataMahasiwa['id_prodi']);
+        // var_dump($prodi);
+        // die;
+        
+       
 
         // cek apakah json valid dan tidak 
         if(json_last_error() !== JSON_ERROR_NONE && $dataMahasiwa !== null){
@@ -53,13 +61,41 @@
                     http_response_code(400);
                     $respone['satatus'] = 400;
                     $respone['message'] = "Program studi yang dipilih tidak ditemukan atau tidak valid!";
-                    $validationError['id_prodi'] = "Prodi tidak valid!";
+                    $validationError['id_prodi'][] = "Prodi tidak valid!";
+                    
                 }
 
             }
 
+          
+
+            // lakukan pengecekan apakah nim sudah ada apa belum
+            if(isset($dataMahasiwa['nim']) && empty($validationError['nim'])) {
+                if(getDataMahasiswaByNIM($conn, $dataMahasiwa['nim'])) {
+                    http_response_code(400);
+                    $respone['statut'] = 400;
+                    $respone['message'] = "NIM tersebut sudah digunakan";
+                    $validationError['nim'][] = "NIM tersbut sudah digunakan!";
+                }
+            }
+
+
+
+            // lakukan pengecekan, apakah email sudah ada apa belum
+            if(isset($dataMahasiwa['email']) && empty($validationError['email'])){
+                if(getDataMahasiswaByEmail($conn, $dataMahasiwa['email'])){
+                    http_response_code(400);
+                    $respone['status'] = 400;
+                    $respone['message'] = "Email tersebut telah digunakan";
+                    $validationError['email'][] = "Email tersebut telah digunakan!"; 
+                }
+            }
+
+            // var_dump($validationError['id_prodi']);
+            // die;
+
             // kalau error tidak kosong, alias belum tervalidasi anjay
-            if(!empty($validationError['nama']) && !empty($validationError['nim']) && !empty($validationError['id_prodi']) && !empty($validationError['email'])) {
+            if(!empty($validationError['nama']) || !empty($validationError['nim']) || !empty($validationError['id_prodi']) || !empty($validationError['email'])) {
                 // kembalikan nilai bad request
                 http_response_code(400);
                 $respone['status'] = 400;

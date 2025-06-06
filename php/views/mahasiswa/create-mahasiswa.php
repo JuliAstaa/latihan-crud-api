@@ -1,9 +1,29 @@
 <?php
 
+    session_start();
+
     require_once __DIR__. '/../../includes/koneksi.php';
     require_once __DIR__. '/../../models/model_prodi.php';
+    require_once __DIR__. '/../../includes/validator.php';
 
     $dataProdi = getAllDataProdi($conn);
+
+    $validationError = $_SESSION['errorValidate'] ?? [];
+    $flashMessage = $_SESSION['flashMessage'] ?? [];
+    $detailFormErr = $_SESSION['detailFormError'] ?? [];
+    $dataForm = $_SESSION['data'] ?? [];
+
+    // var_dump($detailFormErr);
+    // echo "<br>";
+    // var_dump($validationError);
+
+
+
+    unset($_SESSION['errorValidate']);
+    unset($_SESSION['data']);
+    unset($_SESSION['flashMessage']);
+    unset($_SESSION['detailFormError']);
+     
 
 ?>
 
@@ -15,7 +35,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        <style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f4f4f4;
@@ -87,39 +106,55 @@
         }
 
         .error {
+            margin-top: 0px;
+            margin-left: 3px;
             color: red;
         }
-    </style>
     </style>
 </head>
 <body>
      <div class="container">
         <h2>Input Data Mahasiswa</h2>
 
-        <?php if (isset($pesan)): ?>
-            <div class="pesan <?= strpos($pesan, 'Gagal') !== false ? 'error' : '' ?>">
-                <?= $pesan ?>
-            </div>
-        <?php endif; ?>
-
         <form method="post" action="../proses/proses-create-mahasiswa.php">
             <label for="nim">NIM:</label>
-            <input type="text" name="nim" id="nim" required>
+            <input type="text" name="nim" id="nim" value="<?= isset($dataForm["nim"]) ? $dataForm['nim'] : '' ?>" required>
+            <?php foreach ($validationError['nim'] ?? [] as $errNim) : ?>
+                <p class="error">
+                    <?= $errNim; ?>
+                </p>
+            <?php endforeach; ?>
 
             <label for="nama">Nama:</label>
-            <input type="text" name="nama" id="nama" required>
+            <input type="text" name="nama" id="nama" value="<?= isset($dataForm['nama']) ? $dataForm['nama'] : ''?>" required>
+
+            <?php foreach ($validationError['nama'] ?? [] as $errNama) : ?>
+                <p class="error">
+                    <?= $errNama; ?>
+                </p>
+            <?php endforeach; ?>
 
             <label for="id_prodi">ID Prodi:</label>
             <select name="id_prodi" id="id_prodi">
                 <option value="">-----</option>
                 <?php foreach ($dataProdi as $i => $prodi) : ?>
-                    <option value="<?= $prodi['id'] ?>"><?= $prodi['kode_prodi']; ?>--<?= $prodi['prodi']; ?></option>
+                    <option value="<?= $prodi['id'] ?>" <?= (isset($dataForm['id_prodi']) && $dataForm['id_prodi'] == $prodi['id']) ? 'selected' : ''?>><?= $prodi['kode_prodi']; ?>--<?= $prodi['prodi']; ?></option>
                 <?php endforeach; ?>
             </select>
-
+            <?php foreach ($validationError['id_prodi'] ?? [] as $errIdProdi) : ?>
+                <p class="error">
+                    <?= $errIdProdi; ?>
+                </p>
+            <?php endforeach; ?>
+            
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
-
+            <input type="email" name="email" id="email" value="<?= isset($dataForm['email']) ? $dataForm['email'] : '' ?>" required>
+            <?php foreach ($validationError['email'] ?? [] as $errEmail) : ?>
+                <p class="error">
+                    <?= $errEmail; ?>
+                </p>
+            <?php endforeach; ?>
+            
             <button value="submit" type="submit">Simpan</button>
         </form>
     </div>

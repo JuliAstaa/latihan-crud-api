@@ -22,6 +22,7 @@
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
+
         $dataProdiByID = null;
         if($result && mysqli_num_rows($result) > 0) {
             $dataProdiByID = mysqli_fetch_assoc($result);

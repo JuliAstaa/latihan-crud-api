@@ -1,5 +1,6 @@
 <?php
 
+    // dapatkan semua data mahasiswa
     function getAllDataMahasiswa($conn){
         $query = "SELECT * FROM mahasiswa WHERE status = 1";
         $result = mysqli_query($conn, $query);
@@ -14,7 +15,7 @@
         return $data_mahasiswa;
     }
 
-
+    // dapatkat data mahasiswa berdasarkan id
     function getDataMahasiswaByID($conn, $id){
         $query = "SELECT * FROM mahasiwsa WHERE id = ? AND status = 1";
         $stmt = mysqli_prepare($conn, $query);
@@ -31,6 +32,44 @@
         return $dataMahasiswaByID;
     }
 
+    //dapatkan data mahasiswa berdasarkan NIM
+    function getDataMahasiswaByNIM($conn, $nim){
+        $query = "SELECT * FROM mahasiswa WHERE nim = ? AND status = 1";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 's', $nim);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        $dataMahasiswaByNIM = null;
+
+        if($result && mysqli_num_rows($result) > 0) {
+            $dataMahasiswaByNIM = mysqli_fetch_assoc($result);
+        }
+        
+        mysqli_stmt_close($stmt);
+        return $dataMahasiswaByNIM;
+    }
+
+    // dapatkan data mahasiswa berdasarkan email
+    function getDataMahasiswaByEmail($conn, $email){
+        $query = "SELECT * FROM mahasiswa WHERE email = ? AND status = 1";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        $dataMahasiswaByEmail = null;
+
+        if($result && mysqli_num_rows($result) > 0) {
+            $dataMahasiswaByEmail= mysqli_fetch_assoc($result);
+        }
+
+        mysqli_stmt_close($stmt);
+        return $dataMahasiswaByEmail;
+    }
+
+    // create data mahasiswa
     function createDataMahasiswa($conn, $data) {
         // data adalah array assostiatif
         $nim = $data['nim'] ?? null;
@@ -70,6 +109,8 @@
         }
 
     }
+
+    
 
 
 ?>
