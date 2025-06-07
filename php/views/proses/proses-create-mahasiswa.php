@@ -38,7 +38,7 @@
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJSON); // field data json sebagai body
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            'Accept: aplication/json',
+            'Accept: application/json',
             'Content-Length: '. strlen($dataJSON)
         ]);
 

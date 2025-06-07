@@ -17,7 +17,7 @@
 
     // dapatkat data mahasiswa berdasarkan id
     function getDataMahasiswaByID($conn, $id){
-        $query = "SELECT * FROM mahasiwsa WHERE id = ? AND status = 1";
+        $query = "SELECT * FROM mahasiswa WHERE id = ? AND status = 1";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, 'i', $id);
         mysqli_stmt_execute($stmt);
@@ -69,6 +69,24 @@
         return $dataMahasiswaByEmail;
     }
 
+    // dapatkan data mahasiswa berdasarkan email, tp bukan id saat ini
+    function isEmailTakenByOther($conn, $email, $id) {
+        $query = "SELECT * FROM mahasiswa WHERE email = ? AND id != ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'si', $email, $id);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+
+        if($result && mysqli_num_rows($result) > 0) {
+            return true;
+        }
+
+        mysqli_stmt_close($stmt);
+        return false;
+    }
+
     // create data mahasiswa
     function createDataMahasiswa($conn, $data) {
         // data adalah array assostiatif
@@ -108,6 +126,28 @@
             return false;
         }
 
+    }
+
+    // update / put data mahasiswa 
+    function patchDataMahasiswa($conn, $data) {
+
+        $id = $data['id_mhs'] ?? null;
+        $nama = $data['nama'] ?? null;
+        $id_prodi = $data['id_prodi'] ?? null;
+        $email = $data['email'] ?? null;
+
+        $query = "UPDATE mahasiswa SET nama_mhs = ?, id_prodi = ?, email = ? WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'sisi', $nama, $id_prodi, $email, $id);
+        
+        $isExecuted = mysqli_stmt_execute($stmt);
+        
+        if($isExecuted) {
+            return true;
+        } 
+
+        return false;
     }
 
     

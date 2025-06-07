@@ -127,4 +127,52 @@
         
     }
 
+    //validasi untuk input update mahasiswa 
+    function validateInputUpdateDataMahasiswa($data) {
+        $error = [
+            'nama' => [],
+            'id_prodi' => [],
+            'email' => [],
+            'id_mhs' => []
+        ];
+
+        $idMhs = $data['id_mhs'] ?? null;
+        if(!isRequired($idMhs)) {
+            $error['id_mhs'][] = "ID Tidak valid!";
+        }
+
+        //validasi nama
+        $nama = $data['nama'] ?? null;
+        if(!isRequired($nama)){
+            $error['nama'][] = "Nama tidak boleh kosong";
+        } else {
+            if(!isValidName($nama)){
+                $error['nama'][] = "Nama hanya boleh mengandung huruf, spasi, petik, dan dash saja";
+            }
+
+        }
+
+        //validasi prodi
+        $id_prodi = $data['id_prodi'] ?? null;
+        if(!isRequired($id_prodi)) {
+            $error['prodi'][] = "Prodi tidak boleh kosong";
+        } else {
+            if(!isNumeric($id_prodi)) {
+                $error['prodi'][] = "Prodi tidak valid";
+            }
+        }
+
+        // validasi email
+        $email = $data['email'] ?? null;
+        if(!isRequired($email)){
+            $error['email'][] = 'Email tidak boleh kosong';
+        } else {
+            if(!isValidEmailFormat($email)){
+                $error['email'][] = 'Format email tidak valid';
+            }
+        }
+
+        return $error;
+
+    }
 ?>

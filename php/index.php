@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button class="btn btn-update" ><a href="views/mahasiswa/update-mahasiswa.php?<?= $data['id']?>">Edit</a></button>
-                    <button class="btn btn-delete" ><a href="vies/mahasiswa/delete-mahasiswa.php?<?= $data['id']?>">Delete</a></button>
+                    <button class="btn btn-update" ><a href="views/mahasiswa/update-mahasiswa.php?id=<?= $data['id']?>">Edit</a></button>
+                    <button class="btn btn-delete" ><a href="vies/mahasiswa/delete-mahasiswa.php?id=<?= $data['id']?>">Delete</a></button>
                 </div>
             </div>
         <?php endforeach; ?>
