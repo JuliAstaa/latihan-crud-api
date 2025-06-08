@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Kartu Mahasiswa</title>
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div class="information">
+      <div class="show-information"></div>
+    </div>
+
+    <div class="card-container"></div>
+
+    <div class="tambah-data">
+      <a href="views/mahasiswa/create-mahasiswa.php">
+        <button class="btn btn-update-add">Tambah data</button>
+      </a>
+    </div>
+
+    <script type="module">
+      import { getAllDataMahasiswa } from "./src/api/mahasiswaServices.js";
+
+      const cardContainer = document.querySelector(".card-container");
+      const information = document.querySelector(".show-information");
+
+      const renderDataMahasiwa = async () => {
+        try {
+          const listMahasiswa = await getAllDataMahasiswa();
+          listMahasiswa.map((mahasiswa, i) => {
+            cardContainer.innerHTML += `
+                        <div class="card">
+                            <div class="card-header">
+                            <h3>Kartu Mahasiswa - INSTIKI</h3>
+                            </div>
+                            <div class="card-body">
+                            <div class="data-item">
+                                <label>Nama:</label>
+                                <span id="nama">${mahasiswa["nama_mhs"]}</span>
+                            </div>
+                            <div class="data-item">
+                                <label>NIM:</label>
+                                <span id="nim">${mahasiswa["nim"]}</span>
+                            </div>
+                            <div class="data-item">
+                                <label>ID Prodi:</label>
+                                <span id="prodi">${mahasiswa["id_prodi"]}</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Email:</label>
+                                <span id="email">${mahasiswa["email"]}</span>
+                            </div>
+                            </div>
+                            <div class="card-actions">
+                            <a href="views/mahasiswa/update-mahasiswa.php?id=${mahasiswa["id"]}">
+                                <button class="btn btn-update-add">Edit</button></a
+                            >
+                            <form
+                                action=""
+                                method="POST"
+                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');"
+                                style="display: inline"
+                            >
+                                <input type="hidden" name="id_mhs" value="${mahasiswa["id"]}" />
+                                <button class="btn btn-delete" type="submit">Hapus</button>
+                            </form>
+                            </div>
+                        </div>
+                    `;
+          });
+        } catch (error) {
+          console.error("gagal memuat data");
+        }
+      };
+
+      renderDataMahasiwa();
+    </script>
+  </body>
+</html>
