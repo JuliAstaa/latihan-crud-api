@@ -110,6 +110,36 @@
             margin-left: 3px;
             color: red;
         }
+
+        .button-to-back {
+            position: fixed;
+            bottom: 2%;
+            left: 2%;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+       
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            background-color: #dc3545;
+        }
+
+        .btn-back:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -157,6 +187,11 @@
             
             <button value="submit" type="submit">Simpan</button>
         </form>
+    </div>
+    <div class="button-to-back">
+        <a href="../../index.php">
+            <button class="btn btn-back">kembali</button>
+        </a>
     </div>
 </body>
 </html>

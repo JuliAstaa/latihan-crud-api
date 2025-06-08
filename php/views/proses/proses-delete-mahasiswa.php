@@ -37,12 +37,10 @@
 
         $responData = json_decode($responJSON, true);
 
-
-
         if($httpResponeCode == 200){
-             $_SESSION['flash_message'] = ['type' => 'success', 'text' => $responseData['message'] ?? 'Data berhasil dihapus.'];
+             $_SESSION['flashMessage'] = ['type' => 'success', 'text' => $responseData['message'] ?? 'Data berhasil dihapus.'];
         } else {
-             $_SESSION['flash_message'] = ['type' => 'error', 'text' => $responseData['message'] ?? 'Gagal menghapus data.'];
+             $_SESSION['flashMessage'] = ['type' => 'error', 'text' => $responseData['message'] ?? 'Gagal menghapus data.'];
         }
 
         header("Location: ../../index.php");

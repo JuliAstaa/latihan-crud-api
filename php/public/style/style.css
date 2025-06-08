@@ -18,6 +18,7 @@ a {
   padding: 24px;
   max-width: 1800px;
   margin: 0 auto;
+  margin-top: 24px;
 }
 
 .card {
@@ -86,11 +87,11 @@ a {
   transform: scale(1.05);
 }
 
-.btn-update {
+.btn-update-add {
   background-color: #28a745;
 }
 
-.btn-update:hover {
+.btn-update-add:hover {
   background-color: #218838;
 }
 
@@ -100,4 +101,16 @@ a {
 
 .btn-delete:hover {
   background-color: #c82333;
+}
+
+.show-information {
+  position: absolute;
+  top: 1%;
+  left: 2%;
+}
+
+.tambah-data {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
 }

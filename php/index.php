@@ -1,17 +1,19 @@
 <?php
 
+    session_start();
+
     require_once 'includes/koneksi.php';
     require_once 'models/mahasiswa.php';
 
     $dataMahasiswa = getAllDataMahasiswa($conn);
 
     $errorValidate = $_SESSION['errorValidate'] ?? [];
+    $flashMessage = $_SESSION['flashMessage'] ?? [];
 
     unset($_SESSION['errorValidate']);
+    unset($_SESSION['flashMessage']);
 
-    foreach($errorValidate as $error){
-        var_dump($error);
-    }
+   
 
 ?>
 <!DOCTYPE html>
@@ -23,6 +25,14 @@
     <link rel="stylesheet" href="public/style/style.css">
 </head>
 <body>
+
+<div class="information">
+    <div class="show-information">
+        <?php if($flashMessage) : ?>
+            <p><?= $flashMessage['text']; ?></p>
+        <?php endif; ?>
+    </div>
+</div>
 
     <div class="card-container">
         
@@ -50,7 +60,7 @@
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button class="btn btn-update" ><a href="views/mahasiswa/update-mahasiswa.php?id=<?= $data['id']?>">Edit</a></button>
+                    <a href="views/mahasiswa/update-mahasiswa.php?id=<?= $data['id']?>"> <button class="btn btn-update-add" >Edit</button></a>
                     <form action="views/proses/proses-delete-mahasiswa.php" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" style="display:inline;">
                          <input type="hidden" name="id_mhs" value="<?= $data['id'] ?>">
                         <button class="btn btn-delete" type="submit">Hapus</button>
@@ -61,7 +71,13 @@
     
     </div>
 
-   
+<div class="tambah-data">
+    <a href="views/mahasiswa/create-mahasiswa.php">
+        <button class="btn btn-update-add">
+            Tambah data
+        </button>
+    </a>
+</div>   
 
 </body>
 </html>
