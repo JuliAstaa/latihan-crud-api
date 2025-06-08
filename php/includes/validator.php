@@ -175,4 +175,23 @@
         return $error;
 
     }
+
+    // validasi input untuk delete mahasiswa 
+    function validateIdForDeteleDataMahasiswa($id) {
+       $errors = [
+        'id_mhs' =>[]
+       ];
+
+       
+        if(!isRequired($id)) {
+            $errors['id_mhs'][] = "ID Tidak valid!";
+        } else {
+            if(!isNumeric($id)) {
+                $errors['id_mhs'][] = "ID tidak valid!";
+            }
+        }
+
+        return $errors;
+
+    }
 ?>

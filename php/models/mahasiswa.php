@@ -150,6 +150,17 @@
         return false;
     }
 
+    // soft delete data mahasiswa
+    function deleteDataMahasiswa($conn, $id) {
+        $query = "UPDATE mahasiswa SET status = 0 WHERE id = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+
+        $isExecuted = mysqli_stmt_execute($stmt);
+
+        return $isExecuted ? true : false;
+    }
+
     
 
 

@@ -5,6 +5,14 @@
 
     $dataMahasiswa = getAllDataMahasiswa($conn);
 
+    $errorValidate = $_SESSION['errorValidate'] ?? [];
+
+    unset($_SESSION['errorValidate']);
+
+    foreach($errorValidate as $error){
+        var_dump($error);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +51,10 @@
                 </div>
                 <div class="card-actions">
                     <button class="btn btn-update" ><a href="views/mahasiswa/update-mahasiswa.php?id=<?= $data['id']?>">Edit</a></button>
-                    <button class="btn btn-delete" ><a href="vies/mahasiswa/delete-mahasiswa.php?id=<?= $data['id']?>">Delete</a></button>
+                    <form action="views/proses/proses-delete-mahasiswa.php" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" style="display:inline;">
+                         <input type="hidden" name="id_mhs" value="<?= $data['id'] ?>">
+                        <button class="btn btn-delete" type="submit">Hapus</button>
+                    </form>
                 </div>
             </div>
         <?php endforeach; ?>
