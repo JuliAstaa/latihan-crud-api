@@ -42,7 +42,15 @@ const updateDataMahasiswa = async (dataMahasiswa) => {
   return response.json();
 };
 
-const deleteDataMahasiswa = async (idMahasiswa) => {};
+const deleteDataMahasiswa = async (idMahasiswa) => {
+  const response = await fetch(`${API}/delete-data.php?id=${idMahasiswa}`, {
+    method: "DELETE",
+    header: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.json();
+};
 
 export {
   getAllDataMahasiswa,

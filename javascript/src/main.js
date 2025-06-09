@@ -1,4 +1,7 @@
-import { getAllDataMahasiswa } from "./api/mahasiswaServices.js";
+import {
+  getAllDataMahasiswa,
+  deleteDataMahasiswa,
+} from "./api/mahasiswaServices.js";
 
 // retrive data
 const renderDataMahasiwa = async () => {
@@ -60,6 +63,25 @@ document.addEventListener("DOMContentLoaded", () => {
     flashMessage ? (showInformation.innerText = flashMessage.text) : "";
 
     sessionStorage.removeItem("flashMessage");
+  }
+});
+
+// delete data
+document.body.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("btn-delete")) {
+    const mahasiswaId = e.target.dataset.id;
+
+    const isConfirmed = window.confirm(
+      `Apakah Anda yakin ingin menghapus mahasiswa dengan ID "${mahasiswaId}"?`
+    );
+
+    if (isConfirmed) {
+      const results = await deleteDataMahasiswa(mahasiswaId);
+      if (results.status === 200) {
+        alert("Data berhasil di hapus");
+        window.location.reload();
+      }
+    }
   }
 });
 
