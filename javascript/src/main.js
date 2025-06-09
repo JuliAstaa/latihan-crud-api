@@ -31,8 +31,11 @@ const renderDataMahasiwa = async () => {
                         </div>
                         </div>
                         <div class="card-actions">
-                            <button class="btn btn-update-add" data-id="${mahasiswa["id"]}" >Edit</button>
-                            <button class="btn btn-delete" data-id="${mahasiswa["id"]}" type="submit">Hapus</button>
+                            <a href="./pages/update-mahasiswa.html?id=${mahasiswa["id"]}">
+                              <button id="btn-update" class="btn btn-update-add" data-id="${mahasiswa["id"]}" value="${mahasiswa["id"]}" >Edit</button>
+                            </a>
+                            
+                            <button id="btn-delete" class="btn btn-delete" data-id="${mahasiswa["id"]}" type="submit">Hapus</button>
                         </div>
                     </div>
                 `;

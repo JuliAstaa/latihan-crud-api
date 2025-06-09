@@ -63,4 +63,36 @@ const validateMahasiswaForm = (data) => {
   return error;
 };
 
-export { validateMahasiswaForm };
+const validateMahasiswaFormToUpdate = (data) => {
+  const error = {};
+
+  // validasi nama
+  if (!isRequired(data.nama || "")) {
+    error.nama = "Nama tidak boleh kosong";
+  } else if (!isNameValid(data.nama)) {
+    error.nama =
+      "Nama tidak valid, nama hanya boleh menggunakan huruf, spasi, dan dash saja";
+  }
+
+  // validasi ID
+  if (!isRequired(data.id_mhs || "")) {
+    error.nim = "ID tidak boleh kosong";
+  }
+
+  //validasi prodi
+  if (!isRequired(data.id_prodi || "")) {
+    error.idProdi = "ID prodi tidak boleh kosong";
+  } else if (!isNumeric(data.id_prodi)) {
+    error.idProdi = "ID prodi hanya boleh menggunakan angka";
+  }
+
+  if (!isRequired(data.email || "")) {
+    error.email = "Email tidak boleh kosong";
+  } else if (!isEmailValid(data.email)) {
+    error.email = "Format email tidak valid";
+  }
+
+  return error;
+};
+
+export { validateMahasiswaForm, validateMahasiswaFormToUpdate };

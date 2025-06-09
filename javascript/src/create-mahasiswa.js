@@ -14,7 +14,7 @@ const createDataMhs = async (dataMahasiswa) => {
           text: apiResponse.message || "Data mahasiswa berhasil ditambahkan!",
         })
       );
-      window.location.href = ".../index.html";
+      window.location.href = "../index.html";
     }
   } catch (error) {
     console.error(error);
