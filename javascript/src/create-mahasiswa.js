@@ -15,6 +15,8 @@ const createDataMhs = async (dataMahasiswa) => {
         })
       );
       window.location.href = "../index.html";
+    } else {
+      return apiResponse.errors;
     }
   } catch (error) {
     console.error(error);
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorIdProdi = document.getElementById("error-idProdi");
   const errorEmail = document.getElementById("error-email");
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault(); // Mencegah reload halaman
 
     btnSubmit.disabled = true;
@@ -76,7 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnSubmit.textContent = "Menyimpan...";
 
-    createDataMhs(dataMahasiswa);
+    const responsseErr = await createDataMhs(dataMahasiswa);
+    if (responsseErr) {
+      displayFieldError(responsseErr);
+    }
+
     btnSubmit.textContent = "Berhasil";
     btnSubmit.disabled = true;
   });
